@@ -2,26 +2,26 @@ import React from 'react';
 import { Link } from "react-router-dom"
 import { Button } from 'evergreen-ui';
 import { useEffect, useState } from "react";
-import { Combobox, TextInput, Pane, Alert } from "evergreen-ui"
-import { useSelector } from "react-redux";
+import { Combobox, TextInput, Pane, Alert, Spinner } from "evergreen-ui"
+import { useSelector, useDispatch } from "react-redux";
+
+import { setLoaded, setNumberWithCurr, setToCurrency } from 'redux/app/slice'
 
 
 import "./style.scss"
 
 function Calculator() {
 	const { rates, data } = useSelector((state: any) => state.response);
+	const { isLoaded, numberWithCurrInput, toCurrency } = useSelector((state: any) => state.app);
+	const dispatch = useDispatch();
 
-	const [loaded, setLoaded] = useState(true);
-	const [numberWithCurrInput, setNumberWithCurr] = useState('')
-	const [toCurrency, setToCurrency] = useState('')
 	const [culculeted, setCulculeted] = useState('')
 	const [isAlert, setisAlert] = useState(false)
 
 
 
 	const handleChangeNumberInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-		console.log(numberWithCurrInput, toCurrency);
-		setNumberWithCurr(e.target.value);
+		dispatch(setNumberWithCurr(e.target.value));
 	}
 
 	const handleConvert = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -40,6 +40,17 @@ function Calculator() {
 	}
 
 
+	useEffect(() => {
+		if (data !== null) {
+			dispatch(setLoaded(true));
+		}
+		console.log(isLoaded, "isLoaded in Calculator ");
+		return () => {
+			dispatch(setLoaded(false));
+			console.log(isLoaded, "isLoaded in Calculator unmount");
+		};
+	}, [isLoaded]);
+
 	return (
 		<div className="culc-wrapper">
 			<Pane>
@@ -51,11 +62,11 @@ function Calculator() {
 					onRemove={() => { setisAlert(!isAlert) }}
 				>
 					{culculeted}
-				</Alert>) : (<></>)}
+				</Alert>) : (<>  </>)}
 			</Pane>
 
 			{
-				loaded ? (<>
+				isLoaded ? (<>
 					<h1>Сurrency Calculator</h1>
 					<div className='input-currency'>
 						<TextInput name="text-input-name" placeholder={"Number + Your currency"} onChange={handleChangeNumberInput} value={numberWithCurrInput} />
@@ -64,17 +75,17 @@ function Calculator() {
 						<Combobox
 							items={rates}
 							onChange={(selected: string) => {
-								setToCurrency(selected);
-								console.log(selected);
+								dispatch(setToCurrency(selected));
 							}}
 							placeholder="Currency"
+							selectedItem={toCurrency}
 						/>
 						<Button onClick={handleConvert} appearance="primary" intent="success" >Convert</Button >
 					</div>
 
 
 				</>) : (
-					<div>Empty</div>
+					<div><Spinner delay={1000} size={100} /></div>
 				)
 			}
 			<div><Link to="/">Default Currency</Link></div>

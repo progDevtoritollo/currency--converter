@@ -4,6 +4,8 @@ import { createSlice } from '@reduxjs/toolkit'
   numberWithCurrInput: '',
   toCurrency:'UAH',
   isLoaded: false,
+  isAlert:false,
+  alertMassage:"",
   };
 
 export const appSlice = createSlice({
@@ -19,9 +21,16 @@ export const appSlice = createSlice({
     setToCurrency:(state, action) => {
       state.toCurrency = action.payload;
     },
+    setIsAlert:(state, action) => {
+      state.isAlert = action.payload;
+    },
+    setAlertMassage:(state, action) => {
+      state.alertMassage = action.payload;
+    },
+    
   }
 })
 
-export const {setLoaded, setNumberWithCurr, setToCurrency } = appSlice.actions
+export const {setLoaded, setNumberWithCurr, setToCurrency,setIsAlert ,setAlertMassage } = appSlice.actions
 
 export default appSlice.reducer

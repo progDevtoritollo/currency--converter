@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from "react-router-dom"
 import { Button } from 'evergreen-ui';
-import { useEffect, useState } from "react";
-import { Combobox, TextInput, Pane, Alert, Spinner } from "evergreen-ui"
+import { useEffect } from "react";
+import { Combobox, TextInput, Spinner } from "evergreen-ui"
 import { useSelector, useDispatch } from "react-redux";
 
-import { setLoaded, setNumberWithCurr, setToCurrency } from 'redux/app/slice';
+import { setLoaded, setNumberWithCurr, setToCurrency, setIsAlert, setAlertMassage } from 'redux/app/slice';
 import "./index.scss";
 
 
@@ -14,8 +14,6 @@ function Calculator() {
 	const { isLoaded, numberWithCurrInput, toCurrency } = useSelector((state: any) => state.app);
 	const dispatch = useDispatch();
 
-	const [culculeted, setCulculeted] = useState('')
-	const [isAlert, setisAlert] = useState(false)
 
 
 
@@ -30,12 +28,13 @@ function Calculator() {
 		let culc = (+splited_str[0] * data.rates[toCurrency] / data.rates[splited_str[1].toLocaleUpperCase()]);
 
 		if (culc >= 1000) {
-			setCulculeted(culc.toFixed(0));
-			setisAlert(!isAlert)
+			dispatch(setAlertMassage(culc.toFixed(0)))
+			dispatch(setIsAlert(true))
 		} else {
-			setCulculeted(culc.toFixed(2))
-			setisAlert(!isAlert)
+			dispatch(setAlertMassage(culc.toFixed(2)))
+			dispatch(setIsAlert(true))
 		}
+
 	}
 
 
@@ -52,17 +51,6 @@ function Calculator() {
 
 	return (
 		<div className="calculator block">
-			<Pane>
-				{culculeted && isAlert ? (<Alert className='alert'
-					intent="success"
-					title={"Your source is now sending datav " + culculeted}
-					marginBottom={32}
-					isRemoveable={true}
-					onRemove={() => { setisAlert(!isAlert) }}
-				>
-				</Alert>) : (<>  </>)}
-			</Pane>
-
 			{
 				isLoaded ? (< >
 					<h1>Сurrency Calculator</h1>

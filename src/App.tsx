@@ -1,11 +1,15 @@
 import { withProviders } from "./providers";
 import { setResponse, setRates } from "redux/response/slice";
+import { setIsAlert } from 'redux/app/slice';
 
-import { useDispatch } from "react-redux";
+import { Routing } from "pages";
+
+
+import { Pane, Alert, } from "evergreen-ui"
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from 'react';
 import axios from "axios";
 
-import { Routing } from "pages";
 
 const data = {
   success: true,
@@ -184,11 +188,14 @@ const data = {
 };
 function App() {
   const dispatch = useDispatch();
+  const { isAlert, alertMassage } = useSelector((state: any) => state.app);
 
-  const URL_API =
-    "https://api.apilayer.com/fixer/latest?apikey=5152p6gP79jPkKik0VeGdWdcA067gJL1";
+
+
 
   const getCurrency = () => {
+    //   const URL_API =
+    // "https://api.apilayer.com/fixer/latest?apikey=5152p6gP79jPkKik0VeGdWdcA067gJL1";
     // axios.get(URL_API).then((res: any) => {
     //   console.log("data", res);
     //   dispatch(setResponse(res.data))
@@ -206,6 +213,16 @@ function App() {
 
   return (
     <div className="App-wrapper">
+      <Pane>
+        {alertMassage && isAlert ? (<Alert className='alert'
+          intent="success"
+          title={"Your source is now sending datav " + alertMassage}
+          marginBottom={32}
+          isRemoveable={true}
+          onRemove={() => { dispatch(setIsAlert(!isAlert)) }}
+        >
+        </Alert>) : (<>  </>)}
+      </Pane>
       <Routing />
     </div>
   );

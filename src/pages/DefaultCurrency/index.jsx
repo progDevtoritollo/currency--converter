@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Combobox, Spinner } from "evergreen-ui";
 import { useSelector, useDispatch } from "react-redux";
 
 import "./index.scss";
-import { setLoaded, setNumberWithCurr, setToCurrency } from "redux/app/slice";
+import { setLoaded, setToCurrency } from "redux/app/slice";
 
 function DefaultCurrency() {
   const dispatch = useDispatch();

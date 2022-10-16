@@ -5,9 +5,8 @@ import { useDispatch } from "react-redux";
 import { useEffect } from 'react';
 import axios from "axios";
 
-
 import { Routing } from "pages";
-import './App.css';
+
 const data = {
   success: true,
   timestamp: 1665589323,
@@ -206,7 +205,7 @@ function App() {
   }, [])
 
   return (
-    <div className="App">
+    <div className="App-wrapper">
       <Routing />
     </div>
   );

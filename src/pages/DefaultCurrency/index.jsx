@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Combobox, Spinner } from "evergreen-ui";
 import { useSelector, useDispatch } from "react-redux";
 
+import "./index.scss";
 import { setLoaded, setNumberWithCurr, setToCurrency } from "redux/app/slice";
 
 function DefaultCurrency() {
@@ -32,30 +33,33 @@ function DefaultCurrency() {
   };
 
   return (
-    <div className="DefaultCur">
+    <div className="default block">
       {isLoaded ? (
         <>
           <h1>Default Currency</h1>
-          <h1>
+          <h4>
             EUR:{CulcCurrency("EUR")} USD:{CulcCurrency("USD")}
-          </h1>
-          <Combobox
-            items={rates}
-            onChange={(selected) => {
-              dispatch(setToCurrency(selected));
-            }}
-            placeholder="Currency"
-            selectedItem={toCurrency}
-          />
+          </h4>
+
+          <div className="combobox">
+            <Combobox
+              items={rates}
+              onChange={(selected) => {
+                dispatch(setToCurrency(selected));
+              }}
+              placeholder="Currency"
+              selectedItem={toCurrency}
+            />
+          </div>
         </>
       ) : (
         <div>
-          <Spinner delay={1000} size={100} />
+          <Spinner delay={1000} size={400} />
         </div>
       )}
-      <div>
-        <Link to="/calculator">Calculator</Link>
-      </div>
+      <Link className="link" to="/calculator">
+        Calculator
+      </Link>
     </div>
   );
 }

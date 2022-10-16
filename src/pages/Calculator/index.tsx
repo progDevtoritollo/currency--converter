@@ -5,10 +5,9 @@ import { useEffect, useState } from "react";
 import { Combobox, TextInput, Pane, Alert, Spinner } from "evergreen-ui"
 import { useSelector, useDispatch } from "react-redux";
 
-import { setLoaded, setNumberWithCurr, setToCurrency } from 'redux/app/slice'
+import { setLoaded, setNumberWithCurr, setToCurrency } from 'redux/app/slice';
+import "./index.scss";
 
-
-import "./style.scss"
 
 function Calculator() {
 	const { rates, data } = useSelector((state: any) => state.response);
@@ -52,7 +51,7 @@ function Calculator() {
 	}, [isLoaded]);
 
 	return (
-		<div className="culc-wrapper">
+		<div className="calculator block">
 			<Pane>
 				{culculeted && isAlert ? (<Alert className='alert'
 					intent="success"
@@ -61,34 +60,34 @@ function Calculator() {
 					isRemoveable={true}
 					onRemove={() => { setisAlert(!isAlert) }}
 				>
-					{culculeted}
 				</Alert>) : (<>  </>)}
 			</Pane>
 
 			{
-				isLoaded ? (<>
+				isLoaded ? (< >
 					<h1>Сurrency Calculator</h1>
-					<div className='input-currency'>
-						<TextInput name="text-input-name" placeholder={"Number + Your currency"} onChange={handleChangeNumberInput} value={numberWithCurrInput} />
-						<h6> in </h6>
+					<div>
+						<TextInput className='calculator__input-currency' name="text-input-name" placeholder={"Number + Your currency"} onChange={handleChangeNumberInput} value={numberWithCurrInput} />
+					</div>
 
+					<h4> IN </h4>
+					<div className="calculator__combobox">
 						<Combobox
 							items={rates}
 							onChange={(selected: string) => {
 								dispatch(setToCurrency(selected));
 							}}
-							placeholder="Currency"
+							placeholder="to Currency"
 							selectedItem={toCurrency}
 						/>
-						<Button onClick={handleConvert} appearance="primary" intent="success" >Convert</Button >
 					</div>
 
-
+					<Button className='calculator__button' onClick={handleConvert}  >Convert</Button >
 				</>) : (
 					<div><Spinner delay={1000} size={100} /></div>
 				)
 			}
-			<div><Link to="/">Default Currency</Link></div>
+			<Link className='link' to="/">Default Currency</Link>
 		</div >
 	);
 }

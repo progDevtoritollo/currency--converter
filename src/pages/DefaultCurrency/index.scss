@@ -1,0 +1,30 @@
+$color-grey: rgba(62, 61, 65, 0.7);
+
+.default {
+  h1 {
+    font-family: "Chonburi";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 7px;
+  }
+  h4 {
+    font-family: "Coda";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 4px;
+  }
+  .combobox {
+    .ub-w_240px {
+      width: 280px;
+    }
+    input {
+      background-color: transparent;
+    }
+    button {
+      border: 1px solid $color-grey;
+      background-color: transparent;
+    }
+  }
+}

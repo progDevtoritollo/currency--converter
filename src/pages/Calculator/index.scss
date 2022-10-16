@@ -1,0 +1,48 @@
+// @use "./../../styles/vars.scss" as vars;
+
+$color-grey: rgba(62, 61, 65, 0.7);
+.calculator {
+  h4 {
+    font-family: "Coda";
+    font-style: normal;
+    font-weight: 10;
+    font-size: 12px;
+    line-height: 5px;
+  }
+  h1 {
+    font-family: "Chonburi";
+    font-style: normal;
+    font-weight: 200;
+    font-size: 24px;
+    line-height: 77px;
+  }
+  &__input-currency {
+    background-color: transparent;
+  }
+  &__combobox {
+    .ub-w_240px {
+      width: 280px;
+    }
+    input {
+      background-color: transparent;
+    }
+    button {
+      background-color: transparent;
+      border: 1px solid $color-grey;
+    }
+  }
+  &__button {
+    color: #ffffff;
+    background-color: $color-grey;
+
+    padding-left: 35px;
+    padding-right: 35px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+
+    border-radius: 10px;
+  }
+  &__button:hover {
+    color: $color-grey;
+  }
+}
